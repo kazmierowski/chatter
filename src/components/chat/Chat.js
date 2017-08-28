@@ -1,6 +1,9 @@
 import React from 'react';
 import './Chat.css'
 
+import {createSocket} from "../../actions/socket";
+import {connect} from "react-redux";
+
 class Chat extends React.Component {
 
     constructor(props) {
@@ -10,7 +13,17 @@ class Chat extends React.Component {
         }
     }
 
+    componentWillMount() {
+        console.log(this.state);
+        console.log(this.props);
+        console.log(this.store);
+
+        createSocket()
+    }
+
+
     submit(event) {
+        console.log(this.props);
         event.preventDefault();
         this.emitMessage();
         this.setState({inputValue: ''});
@@ -37,4 +50,4 @@ class Chat extends React.Component {
     }
 }
 
-export default Chat;
+export default connect(state => ({socket: state.socket}))(Chat);

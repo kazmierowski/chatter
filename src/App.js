@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import './App.css';
 import Chat from './components/chat/Chat.js'
 import openSocket from 'socket.io-client';
+import {createSocket} from './actions/socket'
+import {connect} from "react-redux";
+import dispatch from "redux/es/createStore";
 
 class App extends Component {
 
-  static initSocket() {
-    return openSocket();
-  }
+  // static initSocket() {
+  //   return openSocket();
+  // }
+
 
   render() {
 
-    let socket = App.initSocket();
-
+      dispatch(createSocket());
     return (
-      <Chat socket={socket}/>
+      <Chat />
     );
   }
 }
 
-export default App;
+export default connect()(App);
