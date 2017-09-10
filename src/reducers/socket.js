@@ -5,8 +5,8 @@ export default (state = [], payload) => {
     console.log(payload);
     switch(payload.type) {
         case 'CREATE_SOCKET':
-            console.log('wchodze');
-            return [...state, {socket: payload.socket}];
+            console.log('wchodze w ');
+            return state['socket'] = payload.socket;
         default:
             console.log('default');
             return state;

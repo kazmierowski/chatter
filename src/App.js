@@ -4,22 +4,21 @@ import Chat from './components/chat/Chat.js'
 import openSocket from 'socket.io-client';
 import {createSocket} from './actions/socket'
 import {connect} from "react-redux";
-import dispatch from "redux/es/createStore";
+import {bindActionCreators} from 'redux';
 
 class App extends Component {
 
-  // static initSocket() {
-  //   return openSocket();
-  // }
-
-
   render() {
 
-      dispatch(createSocket());
+      this.props.createSocket();
     return (
       <Chat />
     );
   }
 }
 
-export default connect()(App);
+let mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({createSocket: createSocket}, dispatch)
+};
+
+export default connect(null, mapDispatchToProps)(App);

@@ -17,8 +17,6 @@ class Chat extends React.Component {
         console.log(this.state);
         console.log(this.props);
         console.log(this.store);
-
-        createSocket()
     }
 
 
@@ -50,4 +48,12 @@ class Chat extends React.Component {
     }
 }
 
-export default connect(state => ({socket: state.socket}))(Chat);
+let mapStateToProps = state => {
+    console.log('===================');
+    console.log(state);
+    return {
+        socket: state.socket
+    }
+};
+
+export default connect(mapStateToProps)(Chat);
