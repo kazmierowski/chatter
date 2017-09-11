@@ -1,20 +1,32 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, {Component} from 'react'
+import './App.css'
 import Chat from './components/chat/Chat.js'
-import openSocket from 'socket.io-client';
+import MessageWindow from './components/message-window/MessageWindow'
 import {createSocket} from './actions/socket'
-import {connect} from "react-redux";
-import {bindActionCreators} from 'redux';
+import {connect} from "react-redux"
+import {bindActionCreators} from 'redux'
 
 class App extends Component {
 
-  render() {
+    onNewMessage(msg, isOwnMessage) {
 
-      this.props.createSocket();
-    return (
-      <Chat />
-    );
-  }
+    }
+
+    createNewMessage(msg, isOwnMessage) {
+
+    }
+
+    render() {
+
+        this.props.createSocket();
+        return (
+          <div className="main-chat-window">
+              <MessageWindow createNewMessage={this.createNewMessage}/>
+              <Chat onNewMessage={this.onNewMessage} />
+          </div>
+
+        );
+    }
 }
 
 let mapDispatchToProps = (dispatch) => {
