@@ -1,5 +1,3 @@
-import openSocket from 'socket.io-client';
-
 export default (state = [], payload) => {
 
     switch(payload.type) {
@@ -8,6 +6,7 @@ export default (state = [], payload) => {
             return state['socket'] = payload.socket;
         default:
             console.log('default');
+            console.log(state);
             return state;
     }
 }

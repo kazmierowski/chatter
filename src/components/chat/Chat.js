@@ -1,9 +1,8 @@
 import React from 'react';
 import './Chat.css'
-
-import {createSocket} from "../../actions/socket";
 import {connect} from "react-redux";
 import {bindActionCreators} from 'redux'
+import {newMessage} from '../../actions/messages'
 
 class Chat extends React.Component {
 
@@ -18,7 +17,7 @@ class Chat extends React.Component {
 
     socketListenerInit() {
         this.props.socket.on('chat message', (msg) => {
-            console.log(msg);
+            this.props.newMessage({content: msg, own: false})
         })
     }
 
@@ -26,13 +25,16 @@ class Chat extends React.Component {
         console.log(this.state);
         console.log(this.props);
         console.log(this.store);
+        console.log('**********************');
+        console.log(this.props.messages);
+
     }
 
 
     submit(event) {
         event.preventDefault();
         this.emitMessage();
-        this.props.onNewMessage(this.state.inputValue, true);
+        this.props.newMessage({content: this.state.inputValue, own: true});
         this.setState({inputValue: ''});
     }
 
@@ -58,15 +60,14 @@ class Chat extends React.Component {
 }
 
 let mapStateToProps = state => {
-    console.log('===================');
-    console.log(state);
     return {
-        socket: state.socket
+        socket: state.socket,
+        messages: state.messages
     }
 };
 
 let mapDispatchToProps = (dispatch) => {
-    // return bindActionCreators({showMessage: showMessage}, dispatch)
+    return bindActionCreators({newMessage: newMessage}, dispatch)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

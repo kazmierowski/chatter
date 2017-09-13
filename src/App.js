@@ -8,20 +8,12 @@ import {bindActionCreators} from 'redux'
 
 class App extends Component {
 
-    onNewMessage(msg, isOwnMessage) {
-
-    }
-
-    createNewMessage(msg, isOwnMessage) {
-
-    }
-
     render() {
 
         this.props.createSocket();
         return (
           <div className="main-chat-window">
-              <MessageWindow createNewMessage={this.createNewMessage}/>
+              <MessageWindow />
               <Chat onNewMessage={this.onNewMessage} />
           </div>
 
