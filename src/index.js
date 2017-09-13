@@ -7,7 +7,8 @@ import {Provider} from 'react-redux';
 import store from './store';
 
 const initialState = {
-    chatName: 'testChat'
+    chatName: 'testChat',
+    messages: []
 };
 
 const StoreInstance = store(initialState);

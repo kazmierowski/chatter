@@ -66,7 +66,7 @@ let mapStateToProps = state => {
 };
 
 let mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({showMessage: showMessage}, dispatch)
+    // return bindActionCreators({showMessage: showMessage}, dispatch)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

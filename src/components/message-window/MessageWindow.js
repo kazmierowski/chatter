@@ -1,15 +1,34 @@
 import React, {Component} from 'react';
+import {connect} from "react-redux";
 
+import Message from './../message/Message';
 
 class MessageWindow extends Component {
 
+    constructor(props) {
+        super(props);
+        console.log(props);
+    }
+    
     render() {
         console.log('--------------------------');
         console.log(this.props);
         return(
-          <ul id="messages">{this.props.message}</ul>
+            <div className="message-window">
+                {this.messages}
+            </div>
         )
     }
 }
 
-export default MessageWindow;
+let mapStateToProps = (state) => {
+    return {
+        messages: state.messages
+    }
+};
+
+let mapDispatchToProps = (dispatch) => {
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageWindow);
