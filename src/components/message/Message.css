@@ -6,3 +6,8 @@
 .message.own-message {
   background-color: lightgrey;
 }
+
+.message.update {
+  color: orange;
+  font-weight: bold;
+}

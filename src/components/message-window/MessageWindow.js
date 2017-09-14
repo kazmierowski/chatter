@@ -12,18 +12,24 @@ class MessageWindow extends Component {
     
     render() {
 
-        let messages = this.props.messages.map((message) => {
+        let messages = this.props.messages.map((message, index) => {
             if(message.own) {
-                return <Message messageContent={message.content} messageClass="message own-message"/>
+                return <Message key={index} messageContent={message.content} messageClass="message own-message"/>
             } else {
-                return <Message messageContent={message.content} messageClass="message"/>
+                return <Message key={index} messageContent={message.content} messageClass="message"/>
             }
+        });
+
+        let updateMessages = this.props.updateMessages.map((message, index) => {
+            // return <p>{message.content}</p>
+            return <Message key={index} messageContent={message.content} messageClass="message update" />
         });
 
         console.log('--------------------------');
         console.log(this.props);
         return(
             <div className="message-window">
+                <div className="update-messages">{updateMessages}</div>
                 <ul className="message-list">
                     {messages}
                 </ul>
@@ -34,7 +40,8 @@ class MessageWindow extends Component {
 
 let mapStateToProps = (state) => {
     return {
-        messages: state.messages
+        messages: state.messages,
+        updateMessages: state.updateMessages
     }
 };
 

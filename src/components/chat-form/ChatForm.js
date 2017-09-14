@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from 'redux'
 import {newMessage, newUpdateMessage} from '../../actions/messages'
 
-class Chat extends React.Component {
+class ChatForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,6 +20,23 @@ class Chat extends React.Component {
         this.props.socket.emit('join', 'Kamil');
     }
 
+    submit(event) {
+        event.preventDefault();
+        this.emitMessage();
+        this.props.newMessage({content: this.state.inputValue, own: true});
+        this.setState({inputValue: ''});
+    }
+
+    emitMessage() {
+        this.props.socket.emit('chat message', this.state.inputValue);
+    }
+
+    updateInputValue(event) {
+        this.setState({
+            inputValue: event.target.value
+        })
+    }
+
     render() {
 
         return (
@@ -33,9 +50,7 @@ class Chat extends React.Component {
 
 let mapStateToProps = state => {
     return {
-        socket: state.socket,
-        messages: state.messages,
-        updateMessages: state.updateMessages
+        socket: state.socket
     }
 };
 
