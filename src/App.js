@@ -1,22 +1,28 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, {Component} from 'react'
+import './App.css'
 import Chat from './components/chat/Chat.js'
-import openSocket from 'socket.io-client';
+import MessageWindow from './components/message-window/MessageWindow'
+import {createSocket} from './actions/socket'
+import {connect} from "react-redux"
+import {bindActionCreators} from 'redux'
 
 class App extends Component {
 
-  static initSocket() {
-    return openSocket();
-  }
+    render() {
 
-  render() {
+        this.props.createSocket();
+        return (
+          <div className="main-chat-window">
+              <MessageWindow />
+              <Chat onNewMessage={this.onNewMessage} />
+          </div>
 
-    let socket = App.initSocket();
-
-    return (
-      <Chat socket={socket}/>
-    );
-  }
+        );
+    }
 }
 
-export default App;
+let mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({createSocket: createSocket}, dispatch)
+};
+
+export default connect(null, mapDispatchToProps)(App);

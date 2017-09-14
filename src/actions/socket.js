@@ -1,8 +1,12 @@
-export const createSocket = (socket) => {
-    console.log('socketCreated:', socket);
+import openSocket from 'socket.io-client';
+
+export const createSocket = (() => {
+
+    console.log('socket created');
+    let socket = openSocket();
 
     return {
-        type: create,
-        socket
+        type: 'CREATE_SOCKET',
+        socket: socket
     }
-}
+});

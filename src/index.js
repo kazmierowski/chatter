@@ -4,9 +4,14 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux';
-import Store from './store';
+import store from './store';
 
-const StoreInstance = Store();
+const initialState = {
+    chatName: 'testChat',
+    messages: []
+};
+
+const StoreInstance = store(initialState);
 
 ReactDOM.render(
     <Provider store={StoreInstance}>
