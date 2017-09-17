@@ -1,8 +1,9 @@
 import React from 'react';
-import './Chat.css'
 import {connect} from "react-redux";
-import {bindActionCreators} from 'redux'
-import {newMessage, newUpdateMessage} from '../../actions/messages'
+import {bindActionCreators} from 'redux';
+import {newMessage, newUpdateMessage} from '../../actions/messages';
+import ChatForm from '../chat-form/ChatForm';
+import MessageWindow from '../message-window/MessageWindow';
 
 class Chat extends React.Component {
 
@@ -20,13 +21,25 @@ class Chat extends React.Component {
         this.props.socket.emit('join', 'Kamil');
     }
 
+    socketListenerInit() {
+        this.props.socket.on('chat message', (user, msg, time) => {
+            this.props.newMessage({user: user, content: msg, time: time, own: false})
+        })
+            .on('update', (msg) => {
+                this.props.newUpdateMessage({user: 'system', content: msg})
+            })
+            .on('update-people', (people) => {
+                console.log(people);
+            })
+    }
+
     render() {
 
         return (
-          <form action="#">
-              <input id="chat-input" value={this.state.inputValue} onChange={event => this.updateInputValue(event)}/>
-              <button onClick={event => this.submit(event)}>Send</button>
-          </form>
+          <div>
+              <MessageWindow />
+              <ChatForm />
+          </div>
         );
     }
 }

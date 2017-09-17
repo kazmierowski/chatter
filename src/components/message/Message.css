@@ -6,8 +6,6 @@
 .message.own-message {
   background-color: lightgrey;
 }
-
-.message.update {
-  color: orange;
+.message span.user-name {
   font-weight: bold;
 }

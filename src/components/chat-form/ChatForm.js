@@ -1,5 +1,5 @@
 import React from 'react';
-import './Chat.css'
+import './ChatForm.css'
 import {connect} from "react-redux";
 import {bindActionCreators} from 'redux'
 import {newMessage, newUpdateMessage} from '../../actions/messages'
@@ -11,24 +11,35 @@ class ChatForm extends React.Component {
         this.state = {
             inputValue: ''
         };
-
-        this.socketListenerInit();
     }
 
-    componentDidMount() {
-        // todo: add name input enter to add name to state
-        this.props.socket.emit('join', 'Kamil');
-    }
+    getCurrentTime() {
+        let date = new Date();
+
+        let hour = date.getHours();
+        hour = (hour < 10 ? "0" : "") + hour;
+
+        let min  = date.getMinutes();
+        min = (min < 10 ? "0" : "") + min;
+
+        let sec  = date.getSeconds();
+        sec = (sec < 10 ? "0" : "") + sec;
+
+        return `${hour}:${min}:${sec}`;
+    };
 
     submit(event) {
         event.preventDefault();
-        this.emitMessage();
-        this.props.newMessage({content: this.state.inputValue, own: true});
-        this.setState({inputValue: ''});
+
+        if(this.state.inputValue !== '') {
+            this.emitMessage();
+            this.props.newMessage({content: this.state.inputValue, time: this.getCurrentTime(), own: true});
+            this.setState({inputValue: ''});
+        }
     }
 
     emitMessage() {
-        this.props.socket.emit('chat message', this.state.inputValue);
+        this.props.socket.emit('send', this.state.inputValue);
     }
 
     updateInputValue(event) {
@@ -58,4 +69,4 @@ let mapDispatchToProps = (dispatch) => {
     return bindActionCreators({newMessage: newMessage, newUpdateMessage: newUpdateMessage}, dispatch)
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatForm);

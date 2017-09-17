@@ -8,13 +8,13 @@ export const initMessages = ((messages = []) => {
 export const newMessage = ((message) => {
    return {
        type: 'NEW_MESSAGE',
-       message: [message]
+       message: message
    }
 });
 
 export const newUpdateMessage = ((message) => {
     return {
         type: 'NEW_UPDATE_MESSAGE',
-        message: [message]
+        message: message
     }
 });

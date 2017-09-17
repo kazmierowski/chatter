@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 
 import Message from './../message/Message';
+import UpdateSection from '../update-section/UpdateSection';
+
 import './MessageWindow.css';
 
 class MessageWindow extends Component {
@@ -14,22 +16,20 @@ class MessageWindow extends Component {
 
         let messages = this.props.messages.map((message, index) => {
             if(message.own) {
-                return <Message key={index} messageContent={message.content} messageClass="message own-message"/>
+                return <Message key={index} messageContent={message.content} user="Me" time={message.time} messageClass="message own-message"/>
             } else {
-                return <Message key={index} messageContent={message.content} messageClass="message"/>
+                return <Message key={index} messageContent={message.content} user={message.user} time={message.time} messageClass="message"/>
             }
         });
 
-        let updateMessages = this.props.updateMessages.map((message, index) => {
-            // return <p>{message.content}</p>
-            return <Message key={index} messageContent={message.content} messageClass="message update" />
-        });
+        // let updateMessages = this.props.updateMessages.map((message, index) => {
+        //     return <Message key={index} messageContent={message.content} user={message.user} time={message.time} messageClass="message update" />
+        // });
 
-        console.log('--------------------------');
-        console.log(this.props);
         return(
             <div className="message-window">
-                <div className="update-messages">{updateMessages}</div>
+                <UpdateSection />
+
                 <ul className="message-list">
                     {messages}
                 </ul>
